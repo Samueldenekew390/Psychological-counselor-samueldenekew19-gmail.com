@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solomon | Psychological Counseling & Safe Space</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slateDark: '#12151c',
+                        slateCard: '#1d212b',
+                        sage: '#7D9D82',
+                        ochre: '#E5C392',
+                        cream: '#F5F2EB',
+                        dustyRose: '#C39B9B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts (Inter & Playfair Display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for 3D Interaction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #12151c;
+            color: #F5F2EB;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .serif-font {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar to keep layout elegant */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #12151c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c3342;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7D9D82;
+        }
+        /* Pulse Animation for interactive Zen guide */
+        @keyframes breathIn {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 25px rgba(125, 157, 130, 0.4)); }
+        }
+        .breathing-element {
+            animation: breathIn 6s ease-in-out infinite;
+        }
+        /* Glassmorphism class */
+        .glass-card {
+            background: rgba(29, 33, 43, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="selection:bg-sage selection:text-slateDark antialiased">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center space-x-2">
+                       <img
+    id="headerLogo"
+    src="https://i.ibb.co/C5nYZq4F/photo-2026-07-15-12-52-37.jpg"
+    alt="Logo"
+    class="w-10 h-10 rounded-full object-cover shadow-lg"
+/>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-semibold tracking-wider text-cream">SOLOMON</span>
+                            <span class="text-xs text-ochre tracking-widest -mt-1 uppercase">Counseling</span>
+                        </div>
+                    </a>
+                </div>
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-8 ml-12 lg:ml-24">
+                    <a href="#about" class="text-sm font-medium text-cream hover:text-sage transition-colors duration-200">The Solomon Approach</a>
+                    <a href="#services" class="text-sm font-medium text-cream hover:text-sage transition-colors duration-200">Pillars of Support</a>
+                    <a href="#zen-space" class="text-sm font-medium text-cream hover:text-sage transition-colors duration-200">Interactive Zen Space</a>
+                    <a href="#treatment" class="text-sm font-medium text-cream hover:text-sage transition-colors duration-200">Your Plan</a>
+                    <a href="#contact" class="text-sm font-medium text-cream hover:text-sage transition-colors duration-200">Contact</a>
+                </div>
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4 md:hidden">
+                    <button id="mobile-menu-btn" class="text-cream hover:text-sage focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-slateDark border-t border-slateCard">
+            <a href="#about" class="block py-2 text-base font-medium text-cream hover:text-sage">The Approach</a>
+            <a href="#services" class="block py-2 text-base font-medium text-cream hover:text-sage">Pillars of Support</a>
+            <a href="#zen-space" class="block py-2 text-base font-medium text-cream hover:text-sage">Zen Space</a>
+            <a href="#treatment" class="block py-2 text-base font-medium text-cream hover:text-sage">Treatment Planner</a>
+            <a href="#contact" class="block py-2 text-base font-medium text-cream hover:text-sage">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative pt-32 pb-24 md:pt-40 md:pb-36 flex items-center justify-center overflow-hidden min-h-screen">
+        <!-- 3D Canvas Background Container -->
+        <div class="absolute inset-0 z-0 opacity-80 pointer-events-auto">
+            <canvas id="hero-3d-canvas" class="w-full h-full block"></canvas>
+        </div>
+        
+        <!-- Ambient Radial Gradient for Atmosphere -->
+        <div class="absolute inset-0 z-10 bg-gradient-to-t from-slateDark via-transparent to-transparent pointer-events-none"></div>
+        <div class="absolute inset-0 z-10 bg-gradient-to-r from-slateDark via-transparent to-slateDark/50 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column Text -->
+                <div class="lg:col-span-7 space-y-8 text-left">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-sage bg-sage/10 border border-sage/20 uppercase">
+                        <span class="w-2 h-2 rounded-full bg-sage mr-2 animate-ping"></span> Safe, Private & Confidential
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-cream">
+                        Your Voice Heard. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-sage via-ochre to-dustyRose">
+                            Your Mind Understood.
+                        </span>
+                    </h1>
+                    <p class="text-lg text-cream/80 max-w-xl leading-relaxed">
+                       ወደ <strong class="text-ochre">ሰለሞን</strong> የሙያዊ ምክር አገልግሎት እንኳን በደህና መጡ። እዚህ፣ ያለ ምንም ፍርድና ትችት በነፃነት የሚወያዩበት፣ ተግዳሮቶችን የሚፈቱበት እንዲሁም በራስ መተማመንዎን እና የአእምሮ ሰላምዎን መልሰው ለማግኘት በተዘጋጀ ልዩ ሂደት ላይ የሚሳተፉበት ምቹ ሁኔታን እናቀርብልዎታለን።
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                        <a href="#contact" class="flex items-center justify-center gap-3 bg-gradient-to-r from-sage to-sage/80 hover:brightness-110 text-slateDark font-bold px-8 py-4 rounded-full shadow-2xl transition-all transform hover:-translate-y-1">
+                            <i class="fa-solid fa-envelope text-lg animate-pulse"></i>
+                            Begin Your Journey
+                        </a>
+                        <a href="#zen-space" class="flex items-center justify-center gap-2 border border-cream/30 hover:border-sage hover:bg-sage/10 text-cream font-semibold px-8 py-4 rounded-full transition-all">
+                            <span>Interactive Zen Space</span>
+                            <i class="fa-solid fa-arrow-down text-sm"></i>
+                        </a>
+                    </div>
+
+                    <!-- Trust badging (Reference to images) -->
+                    <div class="pt-6 border-t border-cream/10 flex flex-wrap gap-8 items-center text-cream/60">
+                        <div>
+                            <span class="block text-2xl font-bold text-sage font-serif">100%</span>
+                            <span class="text-xs uppercase tracking-wider">Confidential Support</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-ochre font-serif">Tailored</span>
+                            <span class="text-xs uppercase tracking-wider">Treatment Plans</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-dustyRose font-serif">Compassionate</span>
+                            <span class="text-xs uppercase tracking-wider">Active Listening</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Interactive Floating UI Widget (Inspiration from image_782d61.jpg layout style) -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Glassmorphic Wellness HUD -->
+                    <div class="glass-card rounded-3xl p-6 shadow-2xl space-y-6 relative border border-cream/10">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-ochre/10 flex items-center justify-center text-ochre">
+                                    <i class="fa-solid fa-heart-pulse"></i>
+                                </span>
+                                <div>
+                                    <h4 class="font-semibold text-cream text-sm">Interactive Calmness Tracker</h4>
+                                    <p class="text-xs text-cream/50">Interact with the 3D space to ground yourself</p>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-sage/20 text-sage px-2 py-1 rounded">Live Assist</span>
+                        </div>
+
+                        <!-- Mini Mood Assessment Widget -->
+                        <div class="bg-slateDark/60 p-4 rounded-xl border border-cream/5 space-y-3">
+                            <p class="text-sm text-cream/90 font-medium">How are you feeling at this moment?</p>
+                            <div class="grid grid-cols-2 gap-2" id="emotion-checker-btns">
+                                <button onclick="setMood('anxious', this)" class="mood-btn py-2 px-3 rounded-lg text-xs bg-slateCard hover:bg-sage/15 border border-cream/5 transition-all text-left flex items-center gap-2">
+                                    <span>😰</span> Anxious / Panicked
+                                </button>
+                                <button onclick="setMood('stressed', this)" class="mood-btn py-2 px-3 rounded-lg text-xs bg-slateCard hover:bg-sage/15 border border-cream/5 transition-all text-left flex items-center gap-2">
+                                    <span>🤯</span> Stressed / Overwhelmed
+                                </button>
+                                <button onclick="setMood('sad', this)" class="mood-btn py-2 px-3 rounded-lg text-xs bg-slateCard hover:bg-sage/15 border border-cream/5 transition-all text-left flex items-center gap-2">
+                                    <span>😔</span> Sad / Hopeless
+                                </button>
+                                <button onclick="setMood('conflicted', this)" class="mood-btn py-2 px-3 rounded-lg text-xs bg-slateCard hover:bg-sage/15 border border-cream/5 transition-all text-left flex items-center gap-2">
+                                    <span>🤝</span> Relationship issues
+                                </button>
+                            </div>
+                            <!-- Dynamic Reassurance Message -->
+                            <div id="dynamic-reassurance" class="hidden mt-3 p-3 rounded-lg bg-sage/10 border border-sage/20 text-xs text-cream/90 transition-all leading-relaxed">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Audio/Vibe Ambient sounds (ToneJS imitation or Zen quote) -->
+                        <div class="flex items-center justify-between text-xs text-cream/60 pt-2 border-t border-cream/5">
+                            <span id="breathing-prompt"><i class="fa-solid fa-wind text-sage mr-1"></i> Slow drag to rotate the sphere</span>
+                            <span class="text-ochre">Drag & Rotate <i class="fa-solid fa-arrows-spin"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Decorative elements reflecting image_783048.jpg background warmth -->
+                    <div class="absolute -top-12 -right-12 w-32 h-32 bg-ochre/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-sage/20 rounded-full blur-3xl pointer-events-none"></div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- THE SOLOMON APPROACH / VALUES -->
+    <section id="about" class="py-24 bg-slateCard relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Left Column: Rich visual narrative combining concepts from image_7830ff.jpg -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Overlapping image collage cards (CSS styled with fallbacks) -->
+                    <div class="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl group border border-cream/10">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slateDark to-transparent opacity-60 z-10"></div>
+                        <!-- Stylized Therapeutic visual fallback -->
+                        <div class="absolute inset-0 bg-[#242936] flex flex-col items-center justify-center p-8 text-center space-y-6">
+                            <span class="w-16 h-16 rounded-full bg-sage/10 flex items-center justify-center text-sage text-2xl">
+                                <i class="fa-solid fa-feather"></i>
+                            </span>
+                            <div class="space-y-2">
+                                <h4 class="font-serif text-2xl text-cream font-semibold">"A Safe Sanctuary"</h4>
+                            </div>
+                            <div class="w-full h-[1px] bg-cream/10"></div>
+                            <p class="italic text-xs text-ochre/80 font-serif">"Healing doesn't mean the damage never existed. It means the damage no longer controls our lives."</p>
+                        </div>
+                    </div>
+                    <!-- Absolute overlay badge -->
+                    <div class="absolute -bottom-6 -right-6 glass-card p-5 rounded-2xl shadow-xl flex items-center space-x-3 max-w-xs border border-cream/10 z-20">
+                        <span class="w-12 h-12 rounded-full bg-sage flex items-center justify-center text-slateDark text-lg">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </span>
+                        <div>
+                            <span class="block font-bold text-sm text-cream">No Judgment</span>
+                            <span class="block text-xs text-cream/60">Fully confidential workspace</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Text & Pillars breakdown -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="space-y-4">
+                        <span class="text-sm font-semibold text-sage uppercase tracking-wider">A Holistic Sanctuary</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold font-serif text-cream">Guiding Minds, Healing Hearts, & Rebuilding Confidence</h2>
+                        <p class="text-base text-cream/80 leading-relaxed">
+                            At Solomon Psychological Counseling, our fundamental philosophy revolves around **active, non-judgmental listening**. We understand that taking the step toward therapy can feel vulnerable. Our purpose is to establish an immediate, calm environment where you feel deeply safe and understood from your very first session.
+                        </p>
+                    </div>
+
+                    <!-- Highlighted approach benefits -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-sage/10 border border-sage/20 flex items-center justify-center text-sage shrink-0">
+                                <i class="fa-solid fa-ear-listen"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Deep Listening</h4>
+                                <p class="text-sm text-cream/60 mt-1">Talk freely without fear of judgment. Your unique story matters to us.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-ochre/10 border border-ochre/20 flex items-center justify-center text-ochre shrink-0">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Safe Atmosphere</h4>
+                                <p class="text-sm text-cream/60 mt-1">We implement physical and digital confidentiality to ensure your mental privacy.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-dustyRose/10 border border-dustyRose/20 flex items-center justify-center text-dustyRose shrink-0">
+                                <i class="fa-solid fa-file-invoice"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Custom Treatment Plans</h4>
+                                <p class="text-sm text-cream/60 mt-1">Collaboratively craft personal therapeutic pathways tailored to your timeline.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-sage/10 border border-sage/20 flex items-center justify-center text-sage shrink-0">
+                                <i class="fa-solid fa-puzzle-piece"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Practical Coping Skills</h4>
+                                <p class="text-sm text-cream/60 mt-1">Acquire actionable exercises to master anxiety and stress outside sessions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quote and author signature -->
+                    <div class="p-6 rounded-2xl bg-slateDark/50 border border-cream/5 flex items-center justify-between">
+                        <div>
+                            <p class="italic text-cream/70 text-sm">"Your vulnerability is not your weakness; it is your ultimate pathway to healing."</p>
+                            <span class="block mt-2 text-xs font-semibold text-ochre uppercase tracking-widest">— Solomon, Founder & Counselor</span>
+                        </div>
+                        <a href="tel:0945933070" class="w-12 h-12 rounded-full bg-sage hover:bg-opacity-80 flex items-center justify-center text-slateDark text-lg transition-transform hover:scale-105">
+                            <i class="fa-solid fa-phone"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION (PILLARS OF SUPPORT) -->
+    <section id="services" class="py-24 bg-slateDark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-sm font-semibold text-sage uppercase tracking-wider">How We Can Help</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-cream">Pillars of Support & Practical Guidance</h2>
+                <p class="text-cream/70 text-base leading-relaxed">
+                    No problem is too small or too overwhelming. We offer compassionate, professional guidance in a variety of emotional and behavioral specializations.
+                </p>
+            </div>
+
+            <!-- Service Pillars Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Stress & Anxiety -->
+                <div class="glass-card rounded-2xl p-8 hover:border-sage/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-sage"><i class="fa-solid fa-cloud-sun"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Stress & Anxiety Relief</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            Anxiety, nervousness, or racing thoughts can make everyday routines incredibly difficult. We provide actionable, sensory techniques to calm your nervous system, handle school/work overwhelm, and regain control over excessive worries.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-sage mr-2"></i>Calming techniques</li>
+                        <li><i class="fa-solid fa-circle-check text-sage mr-2"></i>De-escalating physical tension</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Depression & Mood Support -->
+                <div class="glass-card rounded-2xl p-8 hover:border-ochre/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-ochre"><i class="fa-solid fa-heart-crack"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Depression & Healing</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            When feeling hopeless, sad, or lacking interest in activities you once loved, getting through the day is a challenge. We provide dedicated, compassionate support to help you gently unpack these emotions and safely rebuild vitality.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-ochre mr-2"></i>Emotional stabilization</li>
+                        <li><i class="fa-solid fa-circle-check text-ochre mr-2"></i>Rediscovering personal interests</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Relationships & Communication -->
+                <div class="glass-card rounded-2xl p-8 hover:border-dustyRose/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-dustyRose"><i class="fa-solid fa-people-arrows"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Improved Relationships</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            Whether dealing with partners, coworkers, family members, or friends, miscommunications arise easily. Learn robust conflict-resolution skills, safe boundaries, and how to state feelings respectfully and clearly.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-dustyRose mr-2"></i>Constructive dialog workshops</li>
+                        <li><i class="fa-solid fa-circle-check text-dustyRose mr-2"></i>Healthy boundaries building</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4: Trauma & Tough Experiences -->
+                <div class="glass-card rounded-2xl p-8 hover:border-sage/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-sage"><i class="fa-solid fa-kit-medical"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Loss, Trauma & Recovery</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            Support after major life disruptions, including grief, accidents, bullying, physical violence, or traumatic events. We guide you to process painful memories step-by-step in a comfortable, highly protected pace.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-sage mr-2"></i>Safe pacing structure</li>
+                        <li><i class="fa-solid fa-circle-check text-sage mr-2"></i>Grief & loss facilitation</li>
+                    </ul>
+                </div>
+
+                <!-- Card 5: Children & Teens Counseling -->
+                <div class="glass-card rounded-2xl p-8 hover:border-ochre/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-ochre"><i class="fa-solid fa-child-reaching"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Youth & Teen Well-being</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            Young people face distinct emotional, behavioral, familial, and school-related changes. We offer interactive and gentle communication formats designed to encourage teenagers and children to share comfortably.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-ochre mr-2"></i>Youth-centric storytelling</li>
+                        <li><i class="fa-solid fa-circle-check text-ochre mr-2"></i>Family transition support</li>
+                    </ul>
+                </div>
+
+                <!-- Card 6: Life Transitions & Confidence -->
+                <div class="glass-card rounded-2xl p-8 hover:border-dustyRose/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="text-2xl text-dustyRose"><i class="fa-solid fa-compass"></i></span>
+                        <h3 class="text-xl font-bold font-serif text-cream">Confidence & Transitions</h3>
+                        <p class="text-sm text-cream/60 leading-relaxed">
+                            Coping with critical life shifts such as career changes, relocation, retirement, divorce, or parenthood. We help you recognize personal strengths, boost self-esteem, and navigate new milestones confidently.
+                        </p>
+                    </div>
+                    <ul class="mt-6 pt-4 border-t border-cream/5 space-y-2 text-xs text-cream/80">
+                        <li><i class="fa-solid fa-circle-check text-dustyRose mr-2"></i>Self-esteem & validation</li>
+                        <li><i class="fa-solid fa-circle-check text-dustyRose mr-2"></i>Goal orientation mapping</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INTERACTIVE ZEN SPACE SECTION -->
+    <section id="zen-space" class="py-24 bg-slateCard relative overflow-hidden">
+        <!-- Floating details -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-sage/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-ochre/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Interactive Controls Column -->
+                <div class="lg:col-span-5 space-y-8 order-2 lg:order-1">
+                    <div class="space-y-4">
+                        <span class="text-sm font-semibold text-ochre uppercase tracking-wider"><i class="fa-solid fa-spa mr-1 animate-spin-slow"></i> Sensory Mindfulness Tool</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold font-serif text-cream">Take a Mindful Minute</h2>
+                        <p class="text-sm text-cream/70 leading-relaxed">
+                            Feeling anxious or overwhelmed? Take a moment to ground yourself. Use this interactive 3D Zen space to sync your breath with the visual rhythm. You can click and slowly drag to turn the sphere, helping center your mind.
+                        </p>
+                    </div>
+
+                    <!-- Breathing Controller Interactive Card -->
+                    <div class="p-6 rounded-2xl bg-slateDark/80 border border-cream/5 space-y-6">
+                        
+                        <!-- Color theme picker for the 3D entity -->
+                        <div class="space-y-2">
+                            <label class="text-xs text-cream/60 uppercase tracking-wider block font-semibold">Choose Your Calming Aura</label>
+                            <div class="flex space-x-3">
+                                <button onclick="changeZenColor('#7D9D82', 'Sage')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-sage/10 text-sage hover:bg-sage/20 transition-all border border-sage/20 text-xs">
+                                    <span class="w-3 h-3 rounded-full bg-sage inline-block"></span>
+                                    <span>Sage Green (Grounding)</span>
+                                </button>
+                                <button onclick="changeZenColor('#E5C392', 'Ochre')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-ochre/10 text-ochre hover:bg-ochre/20 transition-all border border-ochre/20 text-xs">
+                                    <span class="w-3 h-3 rounded-full bg-ochre inline-block"></span>
+                                    <span>Warm Ochre (Warmth)</span>
+                                </button>
+                                <button onclick="changeZenColor('#C39B9B', 'Rose')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-dustyRose/10 text-dustyRose hover:bg-dustyRose/20 transition-all border border-dustyRose/20 text-xs">
+                                    <span class="w-3 h-3 rounded-full bg-dustyRose inline-block"></span>
+                                    <span>Rose (Comfort)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Breath interval configuration -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-cream/60 uppercase tracking-wider font-semibold">Breathing Interval (Pace)</span>
+                                <span id="breath-pace-display" class="text-sage font-mono">Slow (6.0s)</span>
+                            </div>
+                            <input type="range" min="3" max="12" step="0.5" value="6" oninput="changeZenPace(this.value)" class="w-full h-1 bg-slateCard rounded-lg appearance-none cursor-pointer accent-sage">
+                        </div>
+
+                        <!-- Active guiding prompt -->
+                        <div class="bg-sage/10 p-4 rounded-xl border border-sage/20 text-center relative overflow-hidden">
+                            <span class="text-xs text-cream/40 uppercase tracking-widest block font-semibold mb-1">Guided Meditation Cue</span>
+                            <div id="mindfulness-prompt" class="text-base text-cream font-medium font-serif transition-opacity duration-500">
+                                Focus on the expanding visual blob...
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <p class="text-xs text-cream/40 italic">
+                        *This 3D tool uses gentle rendering vectors to simulate a biofeedback breathing loop, which is often clinically shown to assist in heart-rate variability management during acute stress.
+                    </p>
+                </div>
+
+                <!-- 3D Viewer Column -->
+                <div class="lg:col-span-7 flex flex-col items-center justify-center order-1 lg:order-2">
+                    <div class="relative w-full aspect-square max-w-[480px] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-tr from-slateDark to-[#181d27] border border-cream/5 flex items-center justify-center">
+                        
+                        <!-- Floating canvas placeholder message in case WebGL is disabled -->
+                        <div class="absolute inset-0 z-0 opacity-100 flex items-center justify-center pointer-events-none">
+                            <div class="text-center space-y-2 p-8">
+                                <i class="fa-solid fa-circle-nodes text-3xl text-sage/30 animate-pulse"></i>
+                                <span class="block text-xs uppercase text-cream/40 tracking-widest font-semibold">Active Three.js Visualization Zone</span>
+                            </div>
+                        </div>
+
+                        <!-- Dedicated secondary viewport canvas for Zen Sphere -->
+                        <canvas id="zen-3d-canvas" class="w-full h-full block relative z-10 cursor-grab active:cursor-grabbing"></canvas>
+                        
+                        <!-- Breathing Overlay Helper Ring -->
+                        <div class="absolute bottom-4 left-4 right-4 glass-card p-3 rounded-xl flex items-center justify-between text-xs text-cream/70 z-20">
+                            <span id="breathing-stage-lbl" class="font-semibold text-sage uppercase"><span class="w-2 h-2 inline-block rounded-full bg-sage mr-1.5 animate-ping"></span> Breath In...</span>
+                            <span class="text-[10px] text-cream/40">Rotate, pan, and feel the flow</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE TREATMENT PLANNER PREVIEW -->
+    <section id="treatment" class="py-24 bg-slateDark relative border-t border-cream/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Side: Conceptual & Steps -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-sm font-semibold text-sage uppercase tracking-wider">Collaborative Recovery</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-serif text-cream">Every Path is Bespoke</h2>
+                    <p class="text-base text-cream/80 leading-relaxed">
+                        We don’t believe in cookie-cutter advice. Effective psychological support requires a collaborative treatment plan, built step-by-step alongside your input. Below, you can explore the roadmap structure we routinely utilize to restore well-being.
+                    </p>
+
+                    <!-- Steps Timeline -->
+                    <div class="space-y-6 pt-4">
+                        <div class="flex items-start space-x-4">
+                            <span class="w-8 h-8 rounded-full bg-sage/20 text-sage font-bold flex items-center justify-center shrink-0 text-sm">1</span>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Step 1: Intake & Gentle Dialog</h4>
+                                <p class="text-sm text-cream/50">Establishing a peaceful rapport, finding where it hurts, and checking your safety needs.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <span class="w-8 h-8 rounded-full bg-ochre/20 text-ochre font-bold flex items-center justify-center shrink-0 text-sm">2</span>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Step 2: Goal Collaborative Setting</h4>
+                                <p class="text-sm text-cream/50">Determining what "feeling better" means for you—whether that is managing panic, building self-love, or talking better with family.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <span class="w-8 h-8 rounded-full bg-dustyRose/20 text-dustyRose font-bold flex items-center justify-center shrink-0 text-sm">3</span>
+                            <div>
+                                <h4 class="font-semibold text-cream text-base">Step 3: Adaptive Skill Integration</h4>
+                                <p class="text-sm text-cream/50">Teaching emotional management tools, processing past challenges, and building self-efficacy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Interactive Live Plan Sandbox -->
+                <div class="lg:col-span-6">
+                    <div class="glass-card rounded-3xl p-8 border border-cream/10 space-y-6 shadow-2xl relative">
+                        <h3 class="text-xl font-serif font-semibold text-cream border-b border-cream/10 pb-4">Create Your Plan Draft</h3>
+                        
+                        <!-- Selector for Goal -->
+                        <div class="space-y-3">
+                            <label class="text-xs uppercase text-cream/60 tracking-wider block font-semibold">What is your principal goal?</label>
+                            <select id="user-plan-goal" onchange="updateSimulatedPlan()" class="w-full bg-slateDark border border-cream/15 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all">
+                                <option value="calm">Manage Anxiety, Fear & Racing Thoughts</option>
+                                <option value="energy">Overcome Sadness, Apathy & Low Mood</option>
+                                <option value="resolve">Communicate Better in My Relationships</option>
+                                <option value="confidence">Build Self-Esteem & Recognize Personal Strengths</option>
+                                <option value="trauma">Heal & Adjust After Traumatic Experiences</option>
+                            </select>
+                        </div>
+
+                        <!-- Interactive Outcome Output Window -->
+                        <div class="bg-slateDark p-5 rounded-2xl border border-cream/5 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-semibold text-sage uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles"></i> Personalized Strategy Draft</span>
+                                <span class="text-[10px] text-ochre uppercase font-mono tracking-widest">Active Draft</span>
+                            </div>
+                            
+                            <div class="space-y-3" id="plan-display-container">
+                                <!-- Dynamic plan text populated based on selected dropdown -->
+                                <h4 class="font-bold text-cream text-base" id="plan-title-output">Roadmap to Calmness & Nervous System Recovery</h4>
+                                <p class="text-xs text-cream/60 leading-relaxed" id="plan-desc-output">
+                                    A multi-phased treatment roadmap focusing on grounding mechanics, active sensory integration, and Cognitive Behavioral (CBT) calming steps.
+                                </p>
+                                
+                                <div class="space-y-2 pt-2 text-xs text-cream/80" id="plan-bullets-output">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sage text-[10px]"><i class="fa-solid fa-square-poll-vertical"></i></span>
+                                        <span>Bio-feedback breathing mapping (similar to our Zen Space tool)</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sage text-[10px]"><i class="fa-solid fa-square-poll-vertical"></i></span>
+                                        <span>Anxiety trigger categorization during the physical mapping phase</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-sage text-[10px]"><i class="fa-solid fa-square-poll-vertical"></i></span>
+                                        <span>Gradual exposure protocols for social triggers and specific fears</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Warm direct sign-off -->
+                        <div class="flex items-center justify-between text-xs pt-2">
+                            <span class="text-cream/50">Ready to activate this plan?</span>
+                            <a href="#contact" class="text-sage font-semibold hover:underline">Begin intake session <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT & SECURE INTAKE SECTION -->
+    <section id="contact" class="py-24 bg-slateCard relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                
+                <!-- Left: Contact Details & Direct Call Reassurance -->
+                <div class="lg:col-span-5 space-y-8 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <span class="text-sm font-semibold text-sage uppercase tracking-wider">Start Your Journey Today</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold font-serif text-cream">Reach Out in Total Confidence</h2>
+                        <p class="text-base text-cream/70 leading-relaxed">
+                            No matter what challenges you are currently facing, taking the first step to communicate is a courageous decision. You can either call us directly for an immediate booking or fill out our secure counseling questionnaire below to safely detail your situation.
+                        </p>
+                    </div>
+
+                    <!-- Instant Phone Call Section -->
+                    <div class="p-6 rounded-2xl bg-slateDark/80 border border-cream/5 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center text-sage text-xl animate-pulse">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <div>
+                                <h4 class="font-bold text-cream text-lg">Direct Voice Hotline</h4>
+                                <p class="text-xs text-cream/40">Available for calls and direct appointments</p>
+                            </div>
+                        </div>
+                        <a href="tel:0945933070" class="block w-full text-center bg-sage hover:bg-opacity-90 text-slateDark font-extrabold py-4 rounded-xl text-lg shadow-xl tracking-wider transition-all transform hover:scale-[1.02]">
+                            <i class="fa-solid fa-phone-flip mr-2"></i> 0945933070
+                        </a>
+                        <p class="text-[10px] text-center text-cream/40">Your call is completely private. If we are on active sessions, please leave a brief SMS and we will call you back shortly.</p>
+                    </div>
+
+                    <!-- Trust indicators referencing Mood Board design directions -->
+                    <div class="space-y-3 text-xs text-cream/60">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-lock text-sage"></i>
+                            <span>All communications follow absolute patient-counselor confidentiality principles.</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-ochre"></i>
+                            <span>Secure email queries receive a compassionate response within 24 business hours.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Secure Email Intake Form -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card rounded-3xl p-8 border border-cream/10 shadow-2xl relative">
+                        
+                        <div class="border-b border-cream/10 pb-6 mb-6">
+                            <h3 class="text-2xl font-serif font-bold text-cream">Secure Intake Email Form</h3>
+                            <p class="text-xs text-cream/50 mt-1">Share a brief overview of what you are currently going through so we can plan your session.</p>
+                        </div>
+
+                        <!-- Secure Form -->
+                        <form id="intake-form" onsubmit="handleSecureSubmit(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Name -->
+                                <div class="space-y-2">
+                                    <label class="text-xs uppercase text-cream/70 font-semibold tracking-wider block">Full Name / Preferred Pseudonym</label>
+                                    <input type="text" required placeholder="For example: Solomon" class="w-full bg-slateDark border border-cream/10 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all">
+                                </div>
+                                <!-- Email -->
+                                <div class="space-y-2">
+                                    <label class="text-xs uppercase text-cream/70 font-semibold tracking-wider block">Secure Return Email Address</label>
+                                    <input type="email" required placeholder="name@domain.com" class="w-full bg-slateDark border border-cream/10 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Telephone fallback (optional) -->
+                                <div class="space-y-2">
+                                    <label class="text-xs uppercase text-cream/70 font-semibold tracking-wider block">Contact Phone Number (Optional)</label>
+                                    <input type="tel" placeholder="e.g. 0945933070" class="w-full bg-slateDark border border-cream/10 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all">
+                                </div>
+                                <!-- Area of support dropdown -->
+                                <div class="space-y-2">
+                                    <label class="text-xs uppercase text-cream/70 font-semibold tracking-wider block">What primary support do you need?</label>
+                                    <select required class="w-full bg-slateDark border border-cream/10 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all">
+                                        <option value="" disabled selected>Select specialized area</option>
+                                        <option value="stress">Anxiety & Stress Management</option>
+                                        <option value="depression">Depression & Mood Stabilization</option>
+                                        <option value="relationship">Relationships & Conflicts</option>
+                                        <option value="trauma">Trauma recovery (Loss, bullying, accidents)</option>
+                                        <option value="child-teen">Teenagers or Children Support</option>
+                                        <option value="other">General Life Transitions & Self-Esteem</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Context explanation -->
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase text-cream/70 font-semibold tracking-wider block">Describe your current situation (Confidential)</label>
+                                <textarea rows="4" required placeholder="Let us know what you would like to work through or what makes everyday life difficult..." class="w-full bg-slateDark border border-cream/10 rounded-xl px-4 py-3 text-cream text-sm focus:outline-none focus:border-sage transition-all resize-none"></textarea>
+                            </div>
+
+                            <!-- Consent checkbox for safe data practice -->
+                            <div class="flex items-start gap-3 text-xs text-cream/60">
+                                <input type="checkbox" required id="consent-check" class="w-4 h-4 rounded text-sage bg-slateDark border-cream/10 focus:ring-0 mt-0.5">
+                                <label for="consent-check">I consent to Solomon Psychological Counseling contacting me via the secure channels provided above to arrange scheduling.</label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-sage to-sage/80 hover:brightness-110 text-slateDark font-bold tracking-wider uppercase transition-all shadow-lg text-sm">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Send Confidential Message
+                            </button>
+                        </form>
+
+                        <!-- Custom Toast Notification for safe status feedback (Never use alert) -->
+                        <div id="form-toast" class="hidden absolute inset-0 bg-slateDark/95 rounded-3xl z-30 flex flex-col items-center justify-center text-center p-8 transition-all duration-500">
+                            <span class="w-20 h-20 rounded-full bg-sage/20 text-sage flex items-center justify-center text-4xl animate-bounce mb-6">
+                                <i class="fa-solid fa-envelope-circle-check"></i>
+                            </span>
+                            <h4 class="font-serif text-2xl text-cream font-bold">Confidential Message Transmitted</h4>
+                            <p class="text-sm text-cream/70 max-w-md mt-2">
+                                Thank you for taking this courageous step. Your messages are completely encrypted. Counselor Solomon will review this within 24 hours and contact you to coordinate a secure consultation.
+                            </p>
+                            <button onclick="dismissToast()" class="mt-6 px-6 py-2.5 bg-cream hover:bg-cream/90 text-slateDark font-bold rounded-lg text-xs transition-all uppercase">
+                                Back to Form
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slateDark border-t border-cream/10 py-16 text-cream/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                
+                <!-- Left: Branding & Mission statement -->
+                <div class="md:col-span-5 space-y-6">
+                    <a href="#" class="flex items-center space-x-2">
+                       <img
+    id="footerLogo"
+    src="https://i.ibb.co/C5nYZq4F/photo-2026-07-15-12-52-37.jpg"
+    alt="Footer Logo"
+    class="w-10 h-10 rounded-full object-cover"
+/>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-semibold tracking-wider text-cream">SOLOMON</span>
+                            <span class="text-xs text-ochre tracking-widest -mt-1 uppercase">Counseling</span>
+                        </div>
+                    </a>
+                    <p class="text-xs leading-relaxed max-w-sm">
+                        A modern, professional counseling space focused on active listening, anxiety management, child & teen emotional tools, and customized collaborative healing treatment plans.
+                    </p>
+                    <div class="pt-2">
+                        <a href="#contact" class="inline-flex items-center space-x-2 bg-sage hover:bg-opacity-90 text-slateDark font-semibold px-5 py-2.5 rounded-full shadow-md transition-all transform hover:-translate-y-0.5 text-xs">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>Get in Touch</span>
+                        </a>
+                    </div>
+                    <div class="text-xs text-cream/30">
+                        © 2026 Solomon Psychological Counselor. All Rights Reserved.
+                    </div>
+                </div>
+
+                <!-- Mid: Structural Navigation Anchors -->
+                <div class="md:col-span-3 space-y-4">
+                    <h5 class="text-cream text-xs uppercase tracking-widest font-semibold">Core Pages</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#about" class="hover:text-sage transition-colors">The Solomon Approach</a></li>
+                        <li><a href="#services" class="hover:text-sage transition-colors">Specialized Counseling Pillars</a></li>
+                        <li><a href="#zen-space" class="hover:text-sage transition-colors">Guided 3D Zen Area</a></li>
+                        <li><a href="#treatment" class="hover:text-sage transition-colors">Your Treatment Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <!-- Right: Address, Call details & Inspiration acknowledgement -->
+                <div class="md:col-span-4 space-y-4">
+                    <h5 class="text-cream text-xs uppercase tracking-widest font-semibold">Location & Contact</h5>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-phone text-sage mt-0.5"></i>
+                            <div>
+                                <span class="block font-semibold text-cream">Immediate Call Hotline</span>
+                                <a href="tel:0945933070" class="hover:text-sage font-mono text-sm font-semibold">0945933070</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-shield-halved text-ochre mt-0.5"></i>
+                            <div>
+                                <span class="block font-semibold text-cream">Secure Tele-Therapy</span>
+                                <span>Confidential phone calls, video consultations, or private in-person sessions.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5 text-[10px] text-cream/30">
+                            <i class="fa-solid fa-circle-info mt-0.5"></i>
+                            
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- MAIN SCRIPTS -->
+    <script>
+        // Global variables for Three.js instances to allow smooth runtime updates
+        let heroScene, heroCamera, heroRenderer, heroMesh;
+        let zenScene, zenCamera, zenRenderer, zenMesh;
+        let activeZenColor = '#7D9D82'; // Start with Sage
+        let activeZenPace = 6.0;        // 6-second breathing loop
+        let isSpinningZen = false;
+
+        // Custom Emotion Checking dynamic reassurance messages
+        const emotionResponses = {
+            anxious: "It is completely okay to feel anxious or nervous. Solomon is here to offer simple, sensory strategies to calm your hyperactive nervous system and help you ground yourself immediately.",
+            stressed: "When school, family, work, or problems overwhelm you, learning when and how to say 'stop' is vital. Solomon will work with you to map stressors and teach calming routines.",
+            sad: "Feeling heavy, hopeless, or disconnected? We offer a non-judgmental harbor where you can take all the time you need to rediscover your internal light and strengths.",
+            conflicted: "Communication barriers with friends, spouses, or colleagues can feel draining. Solomon will teach you how to set clean boundaries and clarify difficult dialog constructively."
+        };
+
+        // Initialize things once DOM is ready
+        window.addEventListener('load', () => {
+            initHero3D();
+            initZen3D();
+            setupInteractions();
+            animateHero();
+            animateZen();
+        });
+
+        // Hero background Three.js initialization: Soothing organic particle/dust flow
+        function initHero3D() {
+            const canvas = document.getElementById('hero-3d-canvas');
+            if (!canvas) return;
+
+            const rect = canvas.parentNode.getBoundingClientRect();
+            
+            heroScene = new THREE.Scene();
+            heroCamera = new THREE.PerspectiveCamera(60, rect.width / rect.height, 0.1, 100);
+            heroCamera.position.z = 12;
+
+            heroRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            heroRenderer.setSize(rect.width, rect.height);
+            heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create a collection of calming floating spheres
+            const particlesCount = 80;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particlesCount * 3);
+            const sizes = new Float32Array(particlesCount);
+
+            for (let i = 0; i < particlesCount * 3; i += 3) {
+                // Spread particles gracefully across workspace bounds
+                positions[i] = (Math.random() - 0.5) * 20;
+                positions[i + 1] = (Math.random() - 0.5) * 12;
+                positions[i + 2] = (Math.random() - 0.5) * 10;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            // Create soft glowing points
+            const material = new THREE.PointsMaterial({
+                color: 0x7D9D82,
+                size: 0.18,
+                transparent: true,
+                opacity: 0.45,
+                blending: THREE.AdditiveBlending
+            });
+
+            heroMesh = new THREE.Points(geometry, material);
+            heroScene.add(heroMesh);
+
+            // Add ambient lighting to assist fallback structures
+            const light = new THREE.DirectionalLight(0xF5F2EB, 0.5);
+            light.position.set(5, 5, 5);
+            heroScene.add(light);
+            
+            // Handle window resizing safely
+            window.addEventListener('resize', onWindowResizeHero);
+        }
+
+        // Window resize callback for Hero
+        function onWindowResizeHero() {
+            const canvas = document.getElementById('hero-3d-canvas');
+            if (!canvas) return;
+            const width = canvas.parentNode.clientWidth;
+            const height = canvas.parentNode.clientHeight;
+            
+            heroCamera.aspect = width / height;
+            heroCamera.updateProjectionMatrix();
+            heroRenderer.setSize(width, height);
+        }
+
+        // Animation cycle for background flow
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            
+            if (heroMesh) {
+                // Slow soothing drift of cosmic dust
+                heroMesh.rotation.y += 0.0006;
+                heroMesh.rotation.x += 0.0003;
+                
+                // Gentle breathing wave motion on points
+                const positions = heroMesh.geometry.attributes.position.array;
+                const time = Date.now() * 0.0005;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 1] += Math.sin(time + positions[i]) * 0.0015;
+                }
+                heroMesh.geometry.attributes.position.needsUpdate = true;
+            }
+            
+            heroRenderer.render(heroScene, heroCamera);
+        }
+
+        // Zen Interactive 3D Sphere (Breathing visual generator)
+        function initZen3D() {
+            const canvas = document.getElementById('zen-3d-canvas');
+            if (!canvas) return;
+
+            const rect = canvas.parentNode.getBoundingClientRect();
+            
+            zenScene = new THREE.Scene();
+            zenCamera = new THREE.PerspectiveCamera(45, rect.width / rect.height, 0.1, 100);
+            zenCamera.position.z = 7;
+
+            zenRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            zenRenderer.setSize(rect.width, rect.height);
+            zenRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Generate an organic, wireframe sphere that morphs gently like a living organism
+            const geometry = new THREE.SphereGeometry(1.8, 32, 32);
+            
+            // High-quality materials matching our color palette directions
+            const material = new THREE.MeshStandardMaterial({
+                color: new THREE.Color(activeZenColor),
+                wireframe: true,
+                transparent: true,
+                opacity: 0.8,
+                roughness: 0.1,
+                metalness: 0.1
+            });
+
+            zenMesh = new THREE.Mesh(geometry, material);
+            zenScene.add(zenMesh);
+
+            // Add dual lighting vectors to create spatial depth
+            const dirLight1 = new THREE.DirectionalLight(0xF5F2EB, 1);
+            dirLight1.position.set(2, 5, 2);
+            zenScene.add(dirLight1);
+
+            const dirLight2 = new THREE.DirectionalLight(0xE5C392, 0.4);
+            dirLight2.position.set(-2, -5, -2);
+            zenScene.add(dirLight2);
+
+            const ambLight = new THREE.AmbientLight(0x12151c, 0.7);
+            zenScene.add(ambLight);
+
+            // Event listener to allow user to drag & spin the calming aura
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            canvas.addEventListener('mousedown', (e) => {
+                isDragging = true;
+            });
+            
+            canvas.addEventListener('mousemove', (e) => {
+                const deltaMove = {
+                    x: e.offsetX - previousMousePosition.x,
+                    y: e.offsetY - previousMousePosition.y
+                };
+
+                if (isDragging) {
+                    const deltaRotationQuaternion = new THREE.Quaternion()
+                        .setFromEuler(new THREE.Euler(
+                            toRadians(deltaMove.y * 0.5),
+                            toRadians(deltaMove.x * 0.5),
+                            0,
+                            'XYZ'
+                        ));
+                    
+                    zenMesh.quaternion.multiplyQuaternions(deltaRotationQuaternion, zenMesh.quaternion);
+                }
+
+                previousMousePosition = {
+                    x: e.offsetX,
+                    y: e.offsetY
+                };
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Touch events for mobile support (Responsive adaptive gameplay)
+            canvas.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                if(e.touches.length > 0){
+                    previousMousePosition = {
+                        x: e.touches[0].clientX,
+                        y: e.touches[0].clientY
+                    };
+                }
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if (isDragging && e.touches.length > 0) {
+                    const deltaMove = {
+                        x: e.touches[0].clientX - previousMousePosition.x,
+                        y: e.touches[0].clientY - previousMousePosition.y
+                    };
+
+                    const deltaRotationQuaternion = new THREE.Quaternion()
+                        .setFromEuler(new THREE.Euler(
+                            toRadians(deltaMove.y * 0.5),
+                            toRadians(deltaMove.x * 0.5),
+                            0,
+                            'XYZ'
+                        ));
+                    
+                    zenMesh.quaternion.multiplyQuaternions(deltaRotationQuaternion, zenMesh.quaternion);
+
+                    previousMousePosition = {
+                        x: e.touches[0].clientX,
+                        y: e.touches[0].clientY
+                    };
+                }
+            });
+
+            canvas.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            window.addEventListener('resize', onWindowResizeZen);
+        }
+
+        function toRadians(angle) {
+            return angle * (Math.PI / 180);
+        }
+
+        // Resize callback for Zen Viewer
+        function onWindowResizeZen() {
+            const canvas = document.getElementById('zen-3d-canvas');
+            if (!canvas) return;
+            const width = canvas.parentNode.clientWidth;
+            const height = canvas.parentNode.clientHeight;
+            
+            zenCamera.aspect = width / height;
+            zenCamera.updateProjectionMatrix();
+            zenRenderer.setSize(width, height);
+        }
+
+        // Animation loop mimicking a biological breathing rate
+        function animateZen() {
+            requestAnimationFrame(animateZen);
+
+            const time = Date.now() * 0.001;
+            
+            if (zenMesh) {
+                // Gently rotate the aura when not dragged
+                zenMesh.rotation.y += 0.003;
+                
+                // Breathing cycle calculations (sine wave)
+                // Breathing speed calculated dynamically via `activeZenPace`
+                const waveFreq = (2 * Math.PI) / activeZenPace;
+                const wave = Math.sin(time * waveFreq);
+                const scale = 1.0 + (wave * 0.15); // Scale varies between 0.85 and 1.15
+                
+                zenMesh.scale.set(scale, scale, scale);
+
+                // Morph the geometry vertices to look liquid/organic
+                const positionAttribute = zenMesh.geometry.attributes.position;
+                const vertex = new THREE.Vector3();
+                for (let i = 0; i < positionAttribute.count; i++) {
+                    vertex.fromBufferAttribute(positionAttribute, i);
+                    
+                    // Simple procedural displacement wave
+                    const noise = Math.sin(vertex.x * 2 + time) * Math.cos(vertex.y * 2 + time) * 0.05;
+                    vertex.normalize().multiplyScalar(1.8 + noise);
+                    
+                    positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+                }
+                positionAttribute.needsUpdate = true;
+
+                // Update UI prompts to match the current breath phase (Inhale vs Exhale)
+                const breathStageLbl = document.getElementById('breathing-stage-lbl');
+                const mindfulnessPrompt = document.getElementById('mindfulness-prompt');
+                
+                if (wave > 0.1) {
+                    if (breathStageLbl) breathStageLbl.innerHTML = `<span class="w-2 h-2 inline-block rounded-full bg-sage mr-1.5 animate-ping"></span> Breath In...`;
+                    if (mindfulnessPrompt) mindfulnessPrompt.innerText = "Follow the expansion... Feel your chest open.";
+                } else if (wave < -0.1) {
+                    if (breathStageLbl) breathStageLbl.innerHTML = `<span class="w-2 h-2 inline-block rounded-full bg-ochre mr-1.5 animate-ping"></span> Breath Out...`;
+                    if (mindfulnessPrompt) mindfulnessPrompt.innerText = "Sigh it out slowly... Let the heavy thoughts go.";
+                } else {
+                    if (breathStageLbl) breathStageLbl.innerHTML = `<span class="w-2 h-2 inline-block rounded-full bg-dustyRose mr-1.5"></span> Hold...`;
+                    if (mindfulnessPrompt) mindfulnessPrompt.innerText = "Pause for a brief, safe moment of stillness.";
+                }
+            }
+
+            zenRenderer.render(zenScene, zenCamera);
+        }
+
+        // Dynamic Zen Configuration helpers
+        function changeZenColor(hexColor, label) {
+            activeZenColor = hexColor;
+            if (zenMesh) {
+                zenMesh.material.color.setHex(parseInt(hexColor.replace('#', '0x')));
+            }
+        }
+
+        function changeZenPace(value) {
+            activeZenPace = parseFloat(value);
+            const paceDisplay = document.getElementById('breath-pace-display');
+            if (paceDisplay) {
+                let speedLabel = "Moderate";
+                if (activeZenPace >= 8) speedLabel = "Deep/Calming";
+                if (activeZenPace < 5) speedLabel = "Quick/Active";
+                paceDisplay.innerText = `${speedLabel} (${activeZenPace.toFixed(1)}s)`;
+            }
+        }
+
+        // Setup various document interaction callbacks
+        function setupInteractions() {
+            // Mobile navigation button logic
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Close mobile menu on click of links
+            const links = mobileMenu?.querySelectorAll('a');
+            links?.forEach(lnk => {
+                lnk.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // Set Mood Reassurance checker action
+        function setMood(moodKey, buttonElement) {
+            // Remove active style from all sibling buttons
+            const buttons = document.querySelectorAll('#emotion-checker-btns .mood-btn');
+            buttons.forEach(btn => {
+                btn.className = "mood-btn py-2 px-3 rounded-lg text-xs bg-slateCard hover:bg-sage/15 border border-cream/5 transition-all text-left flex items-center gap-2";
+            });
+
+            // Set active highlight state on clicked
+            if (buttonElement) {
+                buttonElement.className = "mood-btn py-2 px-3 rounded-lg text-xs bg-sage/25 border border-sage text-cream font-semibold transition-all text-left flex items-center gap-2";
+            }
+
+            // Update reassurance content
+            const reassuranceDiv = document.getElementById('dynamic-reassurance');
+            if (reassuranceDiv) {
+                reassuranceDiv.classList.remove('hidden');
+                reassuranceDiv.innerHTML = `
+                    <div class="space-y-1">
+                        <span class="block font-bold text-sage">Message from Solomon:</span>
+                        <p>${emotionResponses[moodKey]}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Dynamic treatment plan estimator mapping details
+        const planStrategies = {
+            calm: {
+                title: "Roadmap to Calmness & Nervous System Recovery",
+                desc: "A multi-phased treatment roadmap focusing on grounding mechanics, active sensory integration, and Cognitive Behavioral (CBT) calming steps.",
+                bullets: [
+                    "Bio-feedback breathing mapping (similar to our Zen Space tool)",
+                    "Anxiety trigger categorization during physical mapping phases",
+                    "Gradual exposure protocols for social triggers and specific fears"
+                ]
+            },
+            energy: {
+                title: "Vitality Activation & Joy Rebuilding Strategy",
+                desc: "A collaborative plan to combat behavioral withdrawal, lack of motivation, and hopelessness with safe, incremental progression.",
+                bullets: [
+                    "Daily routine mapping to safely rebuild self-care habits",
+                    "Cognitive reframing of deeply negative internalized beliefs",
+                    "Safe environment setups to celebrate minor steps without stress"
+                ]
+            },
+            resolve: {
+                title: "Relationship Mediation & Dialogue Strategy",
+                desc: "Designed to improve active communications with family, spouses, or professional colleagues while maintaining self-worth.",
+                bullets: [
+                    "Constructive boundary outlining workshop modules",
+                    "Collaborative listening practice and safe conflict styles",
+                    "Roleplay exercise files inside counseling rooms for difficult calls"
+                ]
+            },
+            confidence: {
+                title: "Self-Esteem & Strength Development Plan",
+                desc: "Focused on uncovering personal strengths, validating boundaries, and establishing a robust positive self-conception.",
+                bullets: [
+                    "Deconstructing negative self-talk patterns",
+                    "Strengths inventory mapping based on life successes",
+                    "Self-advocacy drills for family or professional situations"
+                ]
+            },
+            trauma: {
+                title: "Post-Trauma Safe Processing Protocol",
+                desc: "A highly delicate, secure pathway to recover after loss, violent experiences, bullying, or major accidents.",
+                bullets: [
+                    "Paced narrative processing when you feel ready",
+                    "Physical triggers regulation to regain control of body stress",
+                    "Developing safe futures without distress patterns"
+                ]
+            }
+        };
+
+        function updateSimulatedPlan() {
+            const selectValue = document.getElementById('user-plan-goal').value;
+            const data = planStrategies[selectValue];
+            
+            if (data) {
+                document.getElementById('plan-title-output').innerText = data.title;
+                document.getElementById('plan-desc-output').innerText = data.desc;
+                
+                // Rebuild bullet loops
+                const bulletsContainer = document.getElementById('plan-bullets-output');
+                bulletsContainer.innerHTML = '';
+                data.bullets.forEach(bullet => {
+                    bulletsContainer.innerHTML += `
+                        <div class="flex items-center gap-2">
+                            <span class="text-sage text-[10px]"><i class="fa-solid fa-square-poll-vertical"></i></span>
+                            <span>${bullet}</span>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // Secure submission simulation handler (Never use alert)
+        function handleSecureSubmit(event) {
+            event.preventDefault();
+            // Show custom toast modal within the workspace
+            const toast = document.getElementById('form-toast');
+            if (toast) {
+                toast.classList.remove('hidden');
+            }
+        }
+
+        function dismissToast() {
+            const toast = document.getElementById('form-toast');
+            if (toast) {
+                toast.classList.add('hidden');
+            }
+            // Reset form gracefully
+            document.getElementById('intake-form').reset();
+        }
+    </script>
+</body>
+</html>
